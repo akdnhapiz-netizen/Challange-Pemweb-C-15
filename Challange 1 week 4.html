@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Proyek Bab 01: Kalkulator Diskon Belanja</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 0 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 6px;
+            background-color: #fafafa;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            font-size: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        button:hover {
+            background-color: #004c99;
+        }
+        
+        .struk-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px dashed #666;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-line;
+            display: none;
+            /* Ubah menjadi block lewat JS setelah dihitung */
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Kalkulator Diskon Belanja Minimarket</h1>
+    <p>Lengkapi kode JavaScript di bawah untuk menghitung rincian belanja.</p>
+
+    <div class="card">
+        <div class="form-group">
+            <label for="input-harga">Harga Barang Asli (Rp):</label>
+            <input type="number" id="input-harga" placeholder="Contoh: 100000">
+        </div>
+
+        <div class="form-group">
+            <label for="input-diskon">Persentase Diskon (%):</label>
+            <input type="number" id="input-diskon" placeholder="Contoh: 15">
+        </div>
+
+        <button id="btn-hitung">Hitung Pembayaran</button>
+
+        <div class="struk-box" id="hasil-struk"></div>
+    </div>
+
+
+    <!-- ============================================================ -->
+    <!-- KERJAKAN LOGIKA JAVASCRIPT ANDA DI DALAM TAG SCRIPT BERIKUT  -->
+    <!-- ============================================================ -->
+    <script>
+        // Tulis kode JavaScript Anda di sini.
+        // 1. Ambil elemen input-harga, input-diskon, btn-hitung, dan hasil-struk.
+        const inputHarga = document.getElementById('input-harga');
+        const inputDiskon = document.getElementById('input-diskon');
+        const btnHitung = document.getElementById('btn-hitung');
+        const hasilStruk = document.getElementById('hasil-struk');
+        // 2. Pasang event click pada tombol btn-hitung.
+        btnHitung.addEventListener('click', function() {
+
+            // 3. Konversi nilai input ke tipe number.
+            const hargaAsli = Number(inputHarga.value);
+            let persenDiskon = Number(inputDiskon.value);
+
+            hasilStruk.style.display = 'block';
+            // 4. Lakukan validasi dan perhitungan aritmatika.
+            if (!inputHarga.value || isNaN(hargaAsli) || hargaAsli <= 0) {
+                hasilStruk.innerHTML = `<strong>Peringatan Error:</strong> Harga barang tidak valid`;
+                hasilStruk.style.borderColor = '#d9534f';
+                hasilStruk.style.color = '#d9534f';
+                return;
+            }
+            if (isNaN(persenDiskon) || persenDiskon < 0) {
+                persenDiskon = 0;
+            }
+
+            hasilStruk.style.borderColor = '#666';
+            hasilStruk.style.color = '#333';
+
+            let potonganDiskon = (hargaAsli * persenDiskon) / 100;
+            let totalBayar = hargaAsli - potonganDiskon;
+            // 5. Tampilkan hasil rincian struk menggunakan Template Literals ke elemen hasil-struk.
+            const teksStruk =
+                `=================================
+       STRUK PEMBAYARAN MINIMARKET
+      =================================
+      Harga Asli     : Rp ${hargaAsli.toLocaleString('id-ID')}
+      Diskon (${persenDiskon}\%)   : Rp${potonganDiskon.toLocaleString('id-ID')}
+      ---------------------------------
+      TOTAL BAYAR    : Rp ${totalBayar.toLocaleString('id-ID')}
+      =================================
+      Terima kasih telah berbelanja!`;
+
+            hasilStruk.textContent = teksStruk;
+
+            const transaksi = {
+                hargaAsli: hargaAsli,
+                persenDiskon: persenDiskon,
+                potonganDiskon: potonganDiskon,
+                totalBayar: totalBayar,
+                waktuTransaksi: new Date().toLocaleString('id-ID')
+            };
+
+            console.log('=== Rincian Objek Transaksi ===');
+            console.log(transaksi);
+        });
+    </script>
+
+</body>
+
+</html>
